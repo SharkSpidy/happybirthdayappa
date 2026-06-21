@@ -1,11 +1,9 @@
 import { Film, Heart } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 // ============================================================
 //  MEMORIES DATA
-//  Replace the `src` values below with your own local image paths.
-//  e.g.  src: '/images/dad-1.jpg'
-//  You can keep the structure (id / src / alt) and add as many
-//  photos as you like — the gallery will lay them out automatically.
+//  The gallery and film reel now use the local images in public/assets/images.
 // ============================================================
 
 export interface Memory {
@@ -14,44 +12,33 @@ export interface Memory {
   alt: string;
 }
 
-const memories: Memory[] = Array.from({ length: 36 }, (_, i) => ({
+const imageFiles = Array.from({ length: 32 }, (_, i) => `/assets/images/${i + 1}.jpg`);
+
+const memories: Memory[] = imageFiles.map((src, i) => ({
   id: i + 1,
-  src: `https://images.unsplash.com/photo-${
-    [
-      '1507003211169-0a1dd7228f2d', // portrait
-      '1511895426328-dc8714191300', // family candid
-      '1494790108377-be9c29b29330', // smile
-      '1500648767791-00dcc994a43e', // man portrait
-      '1517423440428-a5a00ad493e8', // outdoor
-      '1506794778202-cad84cf45f1d', // man smiling
-      '1502920917128-1aa500764cbd', // group
-      '1519345182560-3f2917c472ef', // friends
-      '1502790521778-9a6c5fbd2d57', // father child
-      '1531123897727-8f129e1688ce', // vintage man
-    ][i % 10]
-  }?auto=format&fit=crop&w=600&q=80`,
+  src,
   alt: `A treasured memory #${i + 1}`,
 }));
 
-const filmReelImages: string[] = Array.from({ length: 10 }, (_, i) => i).map(
-  (i) =>
-    `https://images.unsplash.com/photo-${
-      [
-        '1507003211169-0a1dd7228f2d',
-        '1511895426328-dc8714191300',
-        '1494790108377-be9c29b29330',
-        '1500648767791-00dcc994a43e',
-        '1517423440428-a5a00ad493e8',
-        '1506794778202-cad84cf45f1d',
-        '1502920917128-1aa500764cbd',
-        '1519345182560-3f2917c472ef',
-        '1502790521778-9a6c5fbd2d57',
-        '1531123897727-8f129e1688ce',
-      ][i]
-    }?auto=format&fit=crop&w=400&q=80`,
-);
+const filmReelImages: string[] = imageFiles.slice(0, 10);
 
 export default function App() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.8;
+    const playPromise = audio.play();
+    if (playPromise instanceof Promise) {
+      playPromise.catch(() => {
+        // Autoplay may be blocked by browser policies;
+        // audio is still available via playback controls.
+      });
+    }
+  }, []);
+
   // duplicate the reel so the loop is seamless
   const reel = [...filmReelImages, ...filmReelImages];
 
@@ -140,6 +127,29 @@ export default function App() {
               </figcaption>
             </figure>
           ))}
+        </div>
+      </section>
+
+      {/* ===== AUDIO PLAYER ===== */}
+      <section className="mx-auto mb-10 max-w-3xl px-6 text-center">
+        <div className="inline-flex items-center gap-4 rounded-3xl border border-teal-800/20 bg-white/80 px-5 py-4 shadow-lg shadow-teal-900/10 backdrop-blur-sm">
+          <div className="text-left">
+            <p className="text-sm uppercase tracking-[0.32em] text-teal-900/70">
+              Now playing
+            </p>
+            <p className="font-display text-lg font-semibold text-teal-950">
+              Birthday Melody
+            </p>
+          </div>
+          <audio
+            ref={audioRef}
+            controls
+            preload="auto"
+            className="h-12 w-full max-w-xl rounded-2xl bg-teal-950/5"
+          >
+            <source src="/assets/music/music.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </section>
 
