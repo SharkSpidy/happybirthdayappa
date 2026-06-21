@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-100 text-teal-950 font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Vintage 35mm film strip edges with repeating perforation holes */
+  .film-perforation {
+    background-image: radial-gradient(
+      circle at center,
+      transparent 8px,
+      rgba(4, 47, 46, 0.95) 9px,
+      rgba(4, 47, 46, 0.95) 14px,
+      transparent 15px
+    );
+    background-size: 48px 100%;
+    background-repeat: repeat-x;
+  }
+
+  /* Pause the marquee on hover */
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
