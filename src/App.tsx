@@ -55,7 +55,7 @@ export default function App() {
           </p>
           <h1 className="font-display text-5xl font-black leading-tight text-teal-900 sm:text-6xl md:text-7xl">
             Happy Birthday,
-            <span className="mt-2 block italic text-gold-500">Dad</span>
+            <span className="mt-2 block italic text-gold-500">Appa</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-teal-800">
             A reel of memories, a gallery of moments — every frame a reason
@@ -158,7 +158,7 @@ export default function App() {
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 px-6">
           <Heart className="h-6 w-6 text-gold-400" />
           <p className="font-display text-xl text-cream-50">
-            Happy Birthday Dad!
+            Happy Birthday Appaa!
           </p>
           <p className="text-sm text-cream-200/70">
             Made with love, 2026
