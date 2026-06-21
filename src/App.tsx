@@ -161,7 +161,7 @@ export default function App() {
             Happy Birthday Appaa!
           </p>
           <p className="text-sm text-cream-200/70">
-            Made with love, 2026
+            Made with ❤️ from US 
           </p>
         </div>
       </footer>
